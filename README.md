@@ -10,13 +10,17 @@ I built a simple Sinatra structure, there are many comments. Please feel free to
 To paraphrase Mark Twain, “I apologize for the [sloppiness] of this [code]. If I’d had more time it would have been [better].”
 
 ### Make Your Bot Smarter
-  #### Dialog Flow
-    - [Dialogflow](https://dialogflow.com/)
-    - [dialogflow-ruby-client gem](https://github.com/dialogflow/dialogflow-ruby-client)
-    - [expando gem](https://github.com/voxable-labs/expando)
-  #### Wit.ai
-    - [Wit.ai](https://wit.ai)
-    - [wit-ruby gem](https://github.com/wit-ai/wit-ruby)
+
+#### Dialog Flow
+
+  - [Dialogflow](https://dialogflow.com/)
+  - [dialogflow-ruby-client gem](https://github.com/dialogflow/dialogflow-ruby-client)
+  - [expando gem](https://github.com/voxable-labs/expando)
+
+#### Wit.ai
+
+  - [Wit.ai](https://wit.ai)
+  - [wit-ruby gem](https://github.com/wit-ai/wit-ruby)
 
 ### References for Building this Demo
 
