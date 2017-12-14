@@ -1,21 +1,21 @@
 class Event < ActiveRecord::Base
   belongs_to :team
 
-  # Validation to prevent duplicates
+# Validation to prevent duplicates
 
   def valid?
+    if team.bot_user_id == user_reference #alt check for all bots --> Team.find_by(bot_user_id: user_reference)
+      puts "*** This is a message by your bot."
+      return false 
+    end
+    
     if type_label == 'message' && !event_text
       puts "*** message has no content to analyze."
       return false 
     end
 
     if subtype_label
-      puts "*** There is a subtype, which means it's probably a duplicate."
-      return false 
-    end
-
-    if team.bot_user_id == user_reference #alt check for all bots --> Team.find_by(bot_user_id: user_reference)
-      puts "*** This is a message by your bot."
+      puts "*** There is a subtype of #{subtype_label}, which means it's probably a duplicate."
       return false 
     end
 
@@ -23,25 +23,26 @@ class Event < ActiveRecord::Base
     true
   end
 
-  # Message Analysis
+# Message Analysis
 
-  def contains(*word_list)
+  def contains?(*word_list)
+    # finds if the listed words are in this event's text
     event_text.downcase.split(/\b/).select {|word| word_list.include?(word) }.any?
   end
 
   def greeting?
-    contains "hello", "hi", "hey"
+    contains? "hello", "hi", "hey"
   end
 
   def story?
-    contains "story", "tell", "history"
+    contains? "story", "tell", "history"
   end
 
   def advice?
-    contains "advice", "how"
+    contains? "advice", "how"
   end
 
-  # Message Content
+# Message Content
 
   def greeting_message
     [
@@ -74,13 +75,15 @@ class Event < ActiveRecord::Base
     ].sample
   end
 
-  # Respond
+# Respond
 
   def respond_with(message)
+    # use team object to send message with this events channel
     team.send_response(channel, message)
   end
 
   def message
+    # respond with the appropriate message
     if greeting?
       respond_with greeting_message
     elsif story?
